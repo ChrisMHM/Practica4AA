@@ -1,6 +1,7 @@
 import random
 import os
 
+#El algoritmo se mantiene igual que para base 10
 def multiplicacion(x, y):
 	if len(str(x)) == 1 or len(str(y)) == 1:
 		return x*y
@@ -22,11 +23,11 @@ def multiplicacion(x, y):
 
 		return prod
 
-
+#Genera numeros de n cifras considerando la base 2 para los limites superior e inferior
 def randomNCifras(n):
-    inicio = 2**(n-1)
-    final = (2**n)-1
-    return random.randint(inicio, final)
+    inferior = 2**(n-1)
+    superior = (2**n)-1
+    return random.randint(inferior, superior)
 
 
 respuesta = 1

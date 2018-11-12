@@ -22,11 +22,11 @@ def multiplicacion(x, y):
 
 		return prod
 
-
+#Genera numeros aleatorios de n cifras considerando limites superior e inferior de base 10
 def randomNCifras(n):
-    inicio = 10**(n-1)
-    final = (10**n)-1
-    return random.randint(inicio, final)
+    inferior = 10**(n-1)
+    superior = (10**n)-1
+    return random.randint(inferior, superior)
 
 
 respuesta = 1
