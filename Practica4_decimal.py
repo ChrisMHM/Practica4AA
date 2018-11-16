@@ -23,11 +23,14 @@ def multiplicacion(x, y):
 		return prod
 
 #Genera numeros aleatorios de n cifras considerando limites superior e inferior de base 10
-def randomNCifras(n):
-    inferior = 10**(n-1)
-    superior = (10**n)-1
-    return random.randint(inferior, superior)
-
+def nCifras(n):
+    a = 1
+    s = 0
+    for i in range(1, n+1):
+        s = s + (i*(10**(n-a)))
+        #print(s, a)
+        a = a+1
+    return s
 
 respuesta = 1
 
@@ -42,8 +45,8 @@ while respuesta != 0:
     elif A == 0 or B == 0:
         print("AxB: " + str(0))
     else:
-        x = randomNCifras(A)
-        y = randomNCifras(B)
+        x = nCifras(A)
+        y = nCifras(B)
 
         print("Numero A: " + str(x))
         print("Numero B: " + str(y))

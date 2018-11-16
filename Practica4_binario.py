@@ -1,5 +1,6 @@
 import random
 import os
+from math import ceil, floor
 
 #El algoritmo se mantiene igual que para base 10
 def multiplicacion(x, y):
@@ -7,27 +8,36 @@ def multiplicacion(x, y):
 		return x*y
 	else:
 		n = max(len(str(x)),len(str(y)))
-		potMedia = n / 2
-		
-		a = x / 10**(potMedia)
-		b = x % 10**(potMedia)
-		c = y / 10**(potMedia)
-		d = y % 10**(potMedia)
-		
-		ac = multiplicacion(a, c)
-		bd = multiplicacion(b, d)
-		ad_mas_bc = multiplicacion(a+b,c+d) - ac - bd
-        
-        #Modificacion para numeros de longitud impar
-		prod = ac * 10**(2*potMedia) + (ad_mas_bc * 10**potMedia) + bd
+		m = int(ceil(float(n)/2))
 
-		return prod
+        x_Sup = int(floor(x/2**m))
+        x_Inf = int(x%(2**m))
+
+        y_Sup = int(floor(y/2**m))
+        y_Inf = int(y%(2**m))
+
+        a = multiplicacion(x_Sup, y_Sup)
+        b = multiplicacion(x_Inf, y_Inf)
+        c = multiplicacion(x_Sup + x_Inf, y_Sup + y_Inf) - a - b
+
+        prod =  int(a*(2**(m*2)) + c*(2**m) + b)
+		
+        return prod
 
 #Genera numeros de n cifras considerando la base 2 para los limites superior e inferior
-def randomNCifras(n):
-    inferior = 2**(n-1)
-    superior = (2**n)-1
-    return random.randint(inferior, superior)
+def nCifras(n):
+    a = 1
+    s = 0
+    for i in range(1, n+1):
+        if i%2 == 1:
+            s = s + (1*(2**(n-a)))
+            #print(s, a)
+            a = a+1
+        else:
+            s = s + (0*(2**(n-a)))
+            #print(s, a)
+            a = a+1
+    return s
 
 
 respuesta = 1
@@ -43,8 +53,8 @@ while respuesta != 0:
     elif A == 0 or B == 0:
         print("AxB: " + str(0))
     else:
-        x = randomNCifras(A)
-        y = randomNCifras(B)
+        x = nCifras(A)
+        y = nCifras(B)
 
         print("Numero A binario: " + str(bin(x)))
         print("Numero B binario: " + str(bin(y)))
