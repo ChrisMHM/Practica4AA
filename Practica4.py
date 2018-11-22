@@ -1,6 +1,5 @@
 import random
 import os
-from math import ceil, floor
 
 #El algoritmo para base 10
 def multiplicacion10(x, y):
