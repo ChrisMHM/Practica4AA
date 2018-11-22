@@ -2,27 +2,49 @@ import random
 import os
 from math import ceil, floor
 
-#El algoritmo se mantiene igual que para base 10
-def multiplicacion(x, y, base):
+#El algoritmo para base 10
+def multiplicacion10(x, y):
 	if len(str(x)) == 1 or len(str(y)) == 1:
 		return x*y
 	else:
 		n = max(len(str(x)),len(str(y)))
-		m = int(ceil(float(n)/2))
-
-        x_Sup = int(floor(x/base**m))
-        x_Inf = int(x%(base**m))
-
-        y_Sup = int(floor(y/base**m))
-        y_Inf = int(y%(base**m))
-
-        a = multiplicacion(x_Sup, y_Sup, base)
-        b = multiplicacion(x_Inf, y_Inf, base)
-        c = multiplicacion(x_Sup + x_Inf, y_Sup + y_Inf, base) - a - b
-
-        prod =  int(a*(base**(m*2)) + c*(base**m) + b)
+		potMedia = n / 2
 		
-        return prod
+		a = x / 10**(potMedia)
+		b = x % 10**(potMedia)
+		c = y / 10**(potMedia)
+		d = y % 10**(potMedia)
+		
+		ac = multiplicacion10(a, c)
+		bd = multiplicacion10(b, d)
+		ad_mas_bc = multiplicacion10(a+b,c+d) - ac - bd
+        
+        #Modificacion para numeros de longitud impar
+		prod = ac * 10**(2*potMedia) + (ad_mas_bc * 10**potMedia) + bd
+
+		return prod
+    
+#El algoritmo para base 2
+def multiplicacion2(x, y):
+	if len(str(x)) == 1 or len(str(y)) == 1:
+		return x*y
+	else:
+		n = max(len(str(x)),len(str(y)))
+		potMedia = n / 2
+		
+		a = x / 2**(potMedia)
+		b = x % 2**(potMedia)
+		c = y / 2**(potMedia)
+		d = y % 2**(potMedia)
+		
+		ac = multiplicacion2(a, c)
+		bd = multiplicacion2(b, d)
+		ad_mas_bc = multiplicacion2(a+b,c+d) - ac - bd
+        
+        #Modificacion para numeros de longitud impar
+		prod = ac * 2**(2*potMedia) + (ad_mas_bc * 2**potMedia) + bd
+
+		return prod
 
 #Genera numeros de n cifras considerando la base 2 para los limites superior e inferior
 def n2Cifras(n):
@@ -51,6 +73,7 @@ def n10Cifras(n):
 respuesta = 1
 
 while respuesta != 0:
+    os.system('cls')
     print("Ingresa la base que con la que desea trabajar: ")
     print("Base 2, ingrese 2")
     print("Base 10, ingrese 10")
@@ -76,7 +99,7 @@ while respuesta != 0:
             #print("Numero A decimal: " + str(x))
             #print("Numero B decimal: " + str(y))
 
-            multi = multiplicacion(x, y, base)
+            multi = multiplicacion2(x, y)
 
             print("AxB en binario: " + str(bin(multi)))
             #print("AxB en decimal: " + str(multi))
@@ -97,7 +120,7 @@ while respuesta != 0:
             print("Numero A: " + str(x))
             print("Numero B: " + str(y))
 
-            multi = multiplicacion(x, y, base)
+            multi = multiplicacion10(x, y)
 
             print("AxB: " + str(multi))
     else:
